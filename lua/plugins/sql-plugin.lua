@@ -33,7 +33,7 @@ return {
   {
     "kristijanhusak/vim-dadbod-ui",
     cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
-    dependencies = "vim-dadbod",
+    dependencies = { "vim-dadbod" },
     keys = {
       { "<leader>D", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI" },
     },
@@ -52,6 +52,28 @@ return {
       -- you save the file running those queries can crash neovim to run use the
       -- default keymap: <leader>S
       vim.g.db_ui_execute_on_save = false
+    end,
+  },
+  {
+    "folke/edgy.nvim",
+    optional = true,
+    opts = function(_, opts)
+      opts.right = opts.right or {}
+      table.insert(opts.right, {
+        title = "Database",
+        ft = "dbui",
+        pinned = true,
+        width = 0.3,
+        open = function()
+          vim.cmd("DBUI")
+        end,
+      })
+
+      opts.bottom = opts.bottom or {}
+      table.insert(opts.bottom, {
+        title = "DB Query Result",
+        ft = "dbout",
+      })
     end,
   },
 }

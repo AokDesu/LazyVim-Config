@@ -32,6 +32,36 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        -- prisma --
+        prismals = {},
+
+        -- Cmake --
+        neocmake = {},
+
+        -- json5 --
+        jsonls = {
+          -- lazy-load schemastore when needed
+          before_init = function(_, new_config)
+            new_config.settings.json.schemas = new_config.settings.json.schemas or {}
+            vim.list_extend(new_config.settings.json.schemas, require("schemastore").json.schemas())
+          end,
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = { enable = true },
+            },
+          },
+        },
+
+        -- markdown --
+        marksman = {},
+
+        -- docker --
+        dockerls = {},
+        docker_compose_language_service = {},
+
         -- C++ --
         clangd = {
           keys = {
@@ -71,12 +101,17 @@ return {
         -- END C++ --
 
         -- JS/TS SETUP --
-        -- Disable tsserver
-        tsserver = { enabled = false },
-        ts_ls = { enabled = false },
-
-        -- vtsls setup
+        --- deprecated -- tsserver renamed to ts_ls but not yet released, so keep this for now
+        --- the proper approach is to check the nvim-lspconfig release version when it's released to determine the server name dynamically
+        tsserver = {
+          enabled = false,
+        },
+        ts_ls = {
+          enabled = false,
+        },
         vtsls = {
+          -- explicitly add default filetypes, so that we can extend
+          -- them in related extras
           filetypes = {
             "javascript",
             "javascriptreact",
@@ -92,12 +127,16 @@ return {
               autoUseWorkspaceTsdk = true,
               experimental = {
                 maxInlayHintLength = 30,
-                completion = { enableServerSideFuzzyMatch = true },
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
               },
             },
             typescript = {
               updateImportsOnFileMove = { enabled = "always" },
-              suggest = { completeFunctionCalls = true },
+              suggest = {
+                completeFunctionCalls = true,
+              },
               inlayHints = {
                 enumMemberValues = { enabled = true },
                 functionLikeReturnTypes = { enabled = true },
@@ -133,10 +172,26 @@ return {
               end,
               desc = "File References",
             },
-            { "<leader>co", LazyVim.lsp.action["source.organizeImports"], desc = "Organize Imports" },
-            { "<leader>cM", LazyVim.lsp.action["source.addMissingImports.ts"], desc = "Add missing imports" },
-            { "<leader>cu", LazyVim.lsp.action["source.removeUnused.ts"], desc = "Remove unused imports" },
-            { "<leader>cD", LazyVim.lsp.action["source.fixAll.ts"], desc = "Fix all diagnostics" },
+            {
+              "<leader>co",
+              LazyVim.lsp.action["source.organizeImports"],
+              desc = "Organize Imports",
+            },
+            {
+              "<leader>cM",
+              LazyVim.lsp.action["source.addMissingImports.ts"],
+              desc = "Add missing imports",
+            },
+            {
+              "<leader>cu",
+              LazyVim.lsp.action["source.removeUnused.ts"],
+              desc = "Remove unused imports",
+            },
+            {
+              "<leader>cD",
+              LazyVim.lsp.action["source.fixAll.ts"],
+              desc = "Fix all diagnostics",
+            },
             {
               "<leader>cV",
               function()
@@ -147,7 +202,7 @@ return {
           },
         },
         -- END JS/TS --
-        --
+
         -- Tailwind CSS --
         tailwindcss = {
           -- exclude a filetype from the default_config

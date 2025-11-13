@@ -3,7 +3,10 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       opts.ensure_installed = opts.ensure_installed or {}
-      vim.list_extend(opts.ensure_installed, { "cpp", "tsx", "typescript" })
+      vim.list_extend(
+        opts.ensure_installed,
+        { "cpp", "tsx", "typescript", "prisma", "sql", "cmake", "json5", "dockerfile" }
+      )
     end,
   },
 }
