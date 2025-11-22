@@ -5,35 +5,11 @@ return {
   },
   {
     "kristijanhusak/vim-dadbod-completion",
-    dependencies = "vim-dadbod",
-    ft = sql_ft,
-    init = function()
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = sql_ft,
-        callback = function()
-          if LazyVim.has_extra("coding.nvim-cmp") then
-            local cmp = require("cmp")
-
-            -- global sources
-            ---@param source cmp.SourceConfig
-            local sources = vim.tbl_map(function(source)
-              return { name = source.name }
-            end, cmp.get_config().sources)
-
-            -- add vim-dadbod-completion source
-            table.insert(sources, { name = "vim-dadbod-completion" })
-
-            -- update sources for the current buffer
-            cmp.setup.buffer({ sources = sources })
-          end
-        end,
-      })
-    end,
   },
   {
     "kristijanhusak/vim-dadbod-ui",
     cmd = { "DBUI", "DBUIToggle", "DBUIAddConnection", "DBUIFindBuffer" },
-    dependencies = { "vim-dadbod" },
+    dependencies = "vim-dadbod",
     keys = {
       { "<leader>D", "<cmd>DBUIToggle<CR>", desc = "Toggle DBUI" },
     },
