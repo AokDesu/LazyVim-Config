@@ -11,6 +11,7 @@ return {
         "cmakelint",
         "markdownlint-cli2",
         "markdown-toc",
+        "css-lsp",
       })
     end,
   },
