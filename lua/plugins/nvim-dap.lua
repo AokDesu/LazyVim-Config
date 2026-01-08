@@ -1,5 +1,9 @@
 return {
   {
+    "leoluz/nvim-dap-go",
+    opts = {},
+  },
+  {
     "rcarriga/nvim-dap-ui",
     -- virtual text for the debugger
     {
