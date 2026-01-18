@@ -33,8 +33,6 @@ return {
     opts = {
       servers = {
 
-        -- copilot --
-        copilot = { enabled = false },
         -- prisma --
         prismals = {},
 
