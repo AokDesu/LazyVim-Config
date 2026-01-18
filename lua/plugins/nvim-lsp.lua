@@ -36,9 +36,6 @@ return {
         -- prisma --
         prismals = {},
 
-        -- dart --
-        dartls = {},
-
         -- kotlin --
         kotlin_language_server = {},
 
