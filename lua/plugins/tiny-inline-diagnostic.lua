@@ -1,11 +1,22 @@
 return {
   {
     "rachartier/tiny-inline-diagnostic.nvim",
-    event = "VeryLazy",
-    priority = 1000,
+    event = "VeryLazy", -- Load when Neovim is ready
+    priority = 1000, -- High priority to ensure it captures diagnostics early
     config = function()
-      require("tiny-inline-diagnostic").setup()
-      vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+      require("tiny-inline-diagnostic").setup({
+
+        preset = "amongus",
+        options = {
+          multilines = {
+            enabled = true,
+          },
+        },
+      })
     end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    opts = { diagnostics = { virtual_text = false } },
   },
 }
